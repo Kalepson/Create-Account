@@ -141,8 +141,8 @@ input {
 .info {
     position: relative;
     background: #F8522DFF;
-    background: -webkit-linear-gradient(to right, #F8522DFF 10%, #F84B67FF 100%);
-    background: linear-gradient(to right, #F8522DFF 10%, #F84B67FF 100%);
+    background: -webkit-linear-gradient(top left, #F8522DFF 10%, #F84B67FF 100%);
+    background: linear-gradient(top left, #F8522DFF 10%, #F84B67FF 100%);
     color: #FFFFFF;
     left: -100%;
     height: 100%;
