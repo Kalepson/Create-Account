@@ -97,7 +97,7 @@ input {
     padding: 12px 15px;
     margin: 8px 0;
     height: 50px;
-    width: 500px;
+    width: 400px;
 }
 
 .container {
@@ -107,8 +107,8 @@ input {
     border-radius: 10px;
     border: 0.1vh #e1dede solid;
     box-shadow: 10px 24px 28px 5px #adacac;
-    width: 1200px;
-    height: 600px;
+    width: 900px;
+    height: 500px;
 }
 
 .account {
@@ -168,7 +168,7 @@ input {
 }
 
 .container.active .create-account {
-    margin-left: 600px;
+    margin-left: 450px;
 }
 
 .container.active .welcome-info {
