@@ -9,22 +9,22 @@
 
 <div class="container">
     <div class="account create-account">
-        <form action="#">
+        <form action="#" id="form">
             <h1 class="info-login">Create Account</h1>
             <div class="icon-container">
-                <a href="#" class="icon"><img alt="facebook"  src="img/facebook.png"></a>
+                <a href="#" class="icon"><img alt="facebook" src="img/facebook.png"></a>
                 <a href="#" class="icon"><img alt="google" src="img/google.png"></a>
                 <a href="#" class="icon"><img alt="Instagram" src="img/Instagram01.png"></a>
             </div>
             <p class="text">or use your email for registration</p>
-            <label><input type="text" placeholder="Name"></label>
-            <label><input type="email" placeholder="Email"></label>
-            <label><input type="password" placeholder="Password"></label>
-            <button>Sign Up</button>
+            <label><input class="nome-login field" type="text"  placeholder="Name" ></label>
+            <label><input class="email-login field" type="email"   placeholder="Email" ></label>
+            <label><input class="password-login field" type="password"   placeholder="Password" ></label>
+            <button class="sign-Up" type="submit">Sign Up</button>
         </form>
     </div>
     <div class="account singIn">
-        <form action="#">
+        <form action="#" class="form">
             <h1 class="info-login">Sign in</h1>
             <div class="icon-container">
                 <a href="#" class="icon"><img alt="facebook" src="img/facebook.png"></a>
@@ -32,10 +32,10 @@
                 <a href="#" class="icon"><img alt="Instagram" src="img/Instagram01.png"></a>
             </div>
             <p class="text">or use your account</p>
-            <label><input type="email" placeholder="Email"></label>
-            <label><input type="password" placeholder="Password"></label>
+            <label><input class="email-register field" type="email" placeholder="Email"></label>
+            <label><input class="password-register field" type="password" placeholder="Password"></label>
             <a href="#" class="forgot-password">Forgot your password?</a>
-            <button>Sign In</button>
+            <button class="sign-In">Sign In</button>
         </form>
     </div>
     <div class="welcome-info">
@@ -53,6 +53,7 @@
         </div>
     </div>
 </div>
+
 
 <script rel="script" src="js/javaScript.js"></script>
 </body>
