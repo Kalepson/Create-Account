@@ -92,7 +92,7 @@ form {
 }
 
 input {
-    border:none ;
+    border: none;
     background-color: #EDEDEDFF;
     padding: 12px 15px;
     margin: 8px 0;
@@ -201,8 +201,8 @@ input {
 /*style input form*/
 
 .valid  {
-    border: 2px solid darkgreen;
+    outline: 2px solid darkgreen;
 }
 .invalid  {
-    border: 2px solid red;
+    outline: 2px solid red;
 }
