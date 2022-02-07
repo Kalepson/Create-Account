@@ -1,5 +1,13 @@
 const buttons = document.querySelectorAll('.btn');
 const container = document.querySelector('.container');
+const form = document.querySelector("#form")
+const field = document.querySelectorAll(".field")
+const nomeLogin = form.querySelector(".nome-login");
+const emailLogin = form.querySelector(".email-login");
+const passwordLogin = form.querySelector(".password-login");
+const emailConnecting = document.querySelector(".email-connecting");
+const passwordConnecting = document.querySelector(".password-connecting");
+
 
 const active = () => {
     buttons.forEach((btn) => {
@@ -10,75 +18,118 @@ const active = () => {
 }
 active()
 
+nomeLogin.addEventListener('blur' ,() =>{
+    const errorName = document.querySelector(".errorName")
+    if (nomeLogin.value === null || nomeLogin.value === ""){
+        nomeLogin.className ="invalid"
+        errorName.textContent ="Name can't be blank"
+        errorName.style.color = "red"
+    }else if (nomeLogin.value.length <= 4 || nomeLogin.value.length >=12 ) {
+        nomeLogin.className ="invalid"
+        errorName.textContent = "Zona trebue sa contina min 4 caractere max 12"
+        errorName.style.color = "red"
+        errorName.style.fontSize= "15px"
 
-const userArray = []
-const form = document.querySelector("#form")
-const nomeLogin = form.querySelector(".nome-login");
-const emailLogin = form.querySelector(".email-login");
-const passwordLogin = form.querySelector(".password-login");
-
-const addUser = (e) => {
-    e.preventDefault()
-    let user = {
-        id: Date.now(),
-        nome: form.querySelector(".nome-login").value,
-        email: form.querySelector(".email-login").value,
-        password: form.querySelector(".password-login").value,
+    }else {
+        nomeLogin.className ="valid"
+        errorName.textContent = ""
     }
-    userArray.push(user)
-    // document.forms[0].reset()
-    console.log('contacte', {userArray})
-
-
-}
-
-
-form.addEventListener('submit', (e) => {
-    addUser(e)
-    validateInput()
 })
 
-const validateInput = () => {
-    const usernameValue = nomeLogin.value.trim()
-    const emailValue = emailLogin.value.trim()
-    const passwordValue = passwordLogin.value.trim()
+emailLogin.addEventListener('blur',() =>{
 
-
-    if (usernameValue === '' || usernameValue.length <= 6 || usernameValue.length >= 12) {
-        nomeLogin.classList.toggle("invalid")
-    } else {
-        nomeLogin.className = "valid"
+    const errorEmail = document.querySelector(".errorEmail")
+    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (emailLogin.value === null || emailLogin.value === ""){
+        emailLogin.className ="invalid"
+        errorEmail.textContent = "Introduceti E-mail"
+        errorEmail.style.color = "red"
     }
-
-
-    function validateEmail(emailValue) {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(emailValue).toLowerCase());
+    else if (!filter.test(emailLogin.value)){
+        emailLogin.className ="invalid"
+        errorEmail.textContent = "Please provide a valid email address"
+        errorEmail.style.color = "red"
+        errorEmail.style.fontSize= "15px"
+    }else {
+        emailLogin.className ="valid"
+        errorEmail.textContent = ""
     }
+})
 
-    if (validateEmail(emailValue)) {
-        emailLogin.className = "valid"
+passwordLogin.addEventListener('blur',() =>{
 
-    } else {
-        emailLogin.classList.toggle("invalid")
-    }
-
-
-    if (passwordValue === '' || passwordValue.length <= 6 || passwordValue.length >= 12) {
-        passwordLogin.classList.toggle("invalid")
-    } else {
+    const errorPassword = document.querySelector(".errorPassword")
+    if (passwordLogin.value.length < 6 || passwordLogin.value.includes("@")){
+        errorPassword.textContent = "Password must be at least 6 characters long and not include @"
+        errorPassword.style.color = "red"
+        errorPassword.style.fontSize= "13px"
+        passwordLogin.className = "invalid"
+    }else {
         passwordLogin.className = "valid"
+        errorPassword.textContent = ""
     }
-}
+})
+
+emailConnecting.addEventListener('blur',() =>{
+
+    const ConnectingError = document.querySelector(".connectingError")
+    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (emailConnecting.value === null || emailConnecting.value === ""){
+        ConnectingError.textContent = "Please provide a valid email address"
+        ConnectingError.style.color = "red"
+        ConnectingError.style.fontSize= "13px"
+        emailConnecting.className = "invalid"
+    }else if (!filter.test(emailConnecting.value)){
+        emailConnecting.className ="invalid"
+        ConnectingError.textContent = "Please provide a valid email address"
+        ConnectingError.style.color = "red"
+        ConnectingError.style.fontSize= "15px"
+    }
+    else {
+        emailConnecting.className = "valid"
+        ConnectingError.textContent = ""
+    }
+})
+
+passwordConnecting.addEventListener('blur',() =>{
+
+    const ConnectingErrorPassword = document.querySelector(".connectingErrorPassword")
+    if (passwordConnecting.value.length < 6 || passwordConnecting.value.includes("@")){
+        ConnectingErrorPassword.textContent = "Password must be at least 6 characters long and not include @"
+        ConnectingErrorPassword.style.color = "red"
+        ConnectingErrorPassword.style.fontSize= "13px"
+        passwordConnecting.className = "invalid"
+    }else {
+        passwordConnecting.className = "valid"
+        ConnectingErrorPassword.textContent = ""
+    }
+})
+
+const userArray = []
+form.addEventListener('submit', (e) => {
+    const addUser = () => {
+        let user = {
+            id: Date.now(),
+            nome: nomeLogin.value,
+            email: emailLogin.value,
+            password: passwordLogin.value,
+        }
+        e.preventDefault()
+        userArray.push(user)
+        // document.forms[0].reset()
+        console.log('contacte', {userArray})
+    }
+    addUser()
+
+})
+
 
 
 const btnIn = document.querySelector(".sign-In");
 btnIn.addEventListener("click", () => {
-    let email = document.querySelector(".email-register").value;
-    let password = document.querySelector(".password-register").value;
 
     userArray.forEach(index => {
-        if (email === index.email || password === index.password) {
+        if (emailConnecting.value.includes(index.email)  || passwordConnecting.value.includes(index.password)) {
             alert("this account is connected")
         } else {
             alert("this account is not registered")
