@@ -1,4 +1,5 @@
 const buttons = document.querySelectorAll('.btn');
+const signUp = document.querySelector('.sign-Up');
 const container = document.querySelector('.container');
 const form = document.querySelector("#form")
 const field = document.querySelectorAll(".field")
@@ -7,7 +8,8 @@ const emailLogin = form.querySelector(".email-login");
 const passwordLogin = form.querySelector(".password-login");
 const emailConnecting = document.querySelector(".email-connecting");
 const passwordConnecting = document.querySelector(".password-connecting");
-
+let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+const btnIn = document.querySelector(".sign-In");
 
 const active = () => {
     buttons.forEach((btn) => {
@@ -18,94 +20,66 @@ const active = () => {
 }
 active()
 
-nomeLogin.addEventListener('blur' ,() =>{
-    const errorName = document.querySelector(".errorName")
-    if (nomeLogin.value === null || nomeLogin.value === ""){
-        nomeLogin.className ="invalid"
-        errorName.textContent ="Name can't be blank"
-        errorName.style.color = "red"
-    }else if (nomeLogin.value.length <= 4 || nomeLogin.value.length >=12 ) {
-        nomeLogin.className ="invalid"
-        errorName.textContent = "Zona trebue sa contina min 4 caractere max 12"
-        errorName.style.color = "red"
-        errorName.style.fontSize= "15px"
 
-    }else {
-        nomeLogin.className ="valid"
+nomeLogin.addEventListener("input", (e) => {
+    const errorName = document.querySelector(".errorName")
+    if (nomeLogin.value.length <= 4 || nomeLogin.value.length >= 12) {
+        errorName.style.display = "inherit"
+        nomeLogin.className = "invalid"
+    } else {
+        nomeLogin.className = "valid"
         errorName.textContent = ""
     }
 })
 
-emailLogin.addEventListener('blur',() =>{
-
+emailLogin.addEventListener('input', () => {
     const errorEmail = document.querySelector(".errorEmail")
-    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (emailLogin.value === null || emailLogin.value === ""){
-        emailLogin.className ="invalid"
-        errorEmail.textContent = "Introduceti E-mail"
-        errorEmail.style.color = "red"
-    }
-    else if (!filter.test(emailLogin.value)){
-        emailLogin.className ="invalid"
-        errorEmail.textContent = "Please provide a valid email address"
-        errorEmail.style.color = "red"
-        errorEmail.style.fontSize= "15px"
-    }else {
-        emailLogin.className ="valid"
+    if (!filter.test(emailLogin.value)) {
+        emailLogin.className = "invalid"
+        errorEmail.style.display = "flex"
+    } else {
+        emailLogin.className = "valid"
         errorEmail.textContent = ""
     }
 })
 
-passwordLogin.addEventListener('blur',() =>{
-
+passwordLogin.addEventListener('input', () => {
     const errorPassword = document.querySelector(".errorPassword")
-    if (passwordLogin.value.length < 6 || passwordLogin.value.includes("@")){
-        errorPassword.textContent = "Password must be at least 6 characters long and not include @"
-        errorPassword.style.color = "red"
-        errorPassword.style.fontSize= "13px"
+    if (passwordLogin.value.length < 6 || passwordLogin.value.includes("@")) {
+        errorPassword.style.display = "flex"
         passwordLogin.className = "invalid"
-    }else {
+    } else {
         passwordLogin.className = "valid"
         errorPassword.textContent = ""
+        signUp.disabled = false;
     }
 })
 
-emailConnecting.addEventListener('blur',() =>{
-
+emailConnecting.addEventListener('input', () => {
     const ConnectingError = document.querySelector(".connectingError")
-    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (emailConnecting.value === null || emailConnecting.value === ""){
-        ConnectingError.textContent = "Please provide a valid email address"
-        ConnectingError.style.color = "red"
-        ConnectingError.style.fontSize= "13px"
+    if (!filter.test(emailConnecting.value)) {
+        ConnectingError.style.display = "flex"
         emailConnecting.className = "invalid"
-    }else if (!filter.test(emailConnecting.value)){
-        emailConnecting.className ="invalid"
-        ConnectingError.textContent = "Please provide a valid email address"
-        ConnectingError.style.color = "red"
-        ConnectingError.style.fontSize= "15px"
-    }
-    else {
+    } else {
         emailConnecting.className = "valid"
         ConnectingError.textContent = ""
     }
 })
 
-passwordConnecting.addEventListener('blur',() =>{
-
+passwordConnecting.addEventListener('input', () => {
     const ConnectingErrorPassword = document.querySelector(".connectingErrorPassword")
-    if (passwordConnecting.value.length < 6 || passwordConnecting.value.includes("@")){
-        ConnectingErrorPassword.textContent = "Password must be at least 6 characters long and not include @"
-        ConnectingErrorPassword.style.color = "red"
-        ConnectingErrorPassword.style.fontSize= "13px"
+    if (passwordConnecting.value.length < 6 || passwordConnecting.value.includes("@")) {
+        ConnectingErrorPassword.style.display = "flex"
         passwordConnecting.className = "invalid"
-    }else {
+    } else {
         passwordConnecting.className = "valid"
-        ConnectingErrorPassword.textContent = ""
+        ConnectingErrorPassword.textContent = "";
     }
+    btnIn.disabled = false;
 })
 
-const userArray = []
+let userArray = []
+
 form.addEventListener('submit', (e) => {
     const addUser = () => {
         let user = {
@@ -114,28 +88,22 @@ form.addEventListener('submit', (e) => {
             email: emailLogin.value,
             password: passwordLogin.value,
         }
-        e.preventDefault()
         userArray.push(user)
         // document.forms[0].reset()
         console.log('contacte', {userArray})
     }
     addUser()
-
 })
 
-
-
-const btnIn = document.querySelector(".sign-In");
 btnIn.addEventListener("click", () => {
-
-    userArray.forEach(index => {
-        if (emailConnecting.value.includes(index.email)  || passwordConnecting.value.includes(index.password)) {
+    userArray.filter((user) => {
+        if (user.password === passwordConnecting.value || user.email === emailConnecting.value) {
             alert("this account is connected")
+        } else if (passwordConnecting.value !== user.password || emailConnecting.value !== user.email) {
+            alert("this account is not registered")
         } else {
             alert("this account is not registered")
         }
     })
-
-
 })
 
