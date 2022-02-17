@@ -18,12 +18,12 @@
             </div>
             <p class="text">or use your email for registration</p>
             <label><input class="nome-login field" type="text"  placeholder="Name" ></label>
-            <span class="errorName"></span>
+            <span class="errorName invalide">Minimum 4 characters max 12</span>
             <label><input class="email-login field" type="email"   placeholder="Email" ></label>
-            <span class="errorEmail"></span>
+            <span class="errorEmail invalide">Please provide a valid email address</span>
             <label><input class="password-login field" type="password"   placeholder="Password" ></label>
-            <span class="errorPassword"></span>
-            <button class="sign-Up" type="submit">Sign Up</button>
+            <span class="errorPassword invalide">Password must be at least 6 characters long and not include @</span>
+            <button class="sign-Up" type="submit" disabled = "true">Sign Up</button>
         </form>
     </div>
     <div class="account singIn">
@@ -36,11 +36,11 @@
             </div>
             <p class="text">or use your account</p>
             <label><input class="email-connecting field" type="email" placeholder="Email"></label>
-            <span class="connectingError"></span>
+            <span class="connectingError invalide">Please provide a valid email address</span>
             <label><input class="password-connecting field" type="password" placeholder="Password"></label>
-            <span class="connectingErrorPassword"></span>
+            <span class="connectingErrorPassword invalide">Password must be at least 6 characters long and not include @</span>
             <a href="#" class="forgot-password">Forgot your password?</a>
-            <button class="sign-In">Sign In</button>
+            <button class="sign-In" disabled = "true">Sign In</button>
         </form>
     </div>
     <div class="welcome-info">
