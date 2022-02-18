@@ -23,7 +23,10 @@ active()
 
 nomeLogin.addEventListener("input", (e) => {
     const errorName = document.querySelector(".errorName")
-    if (nomeLogin.value.length <= 4 || nomeLogin.value.length >= 12) {
+    if (nomeLogin.value === null || nomeLogin.value === "") {
+        errorName.style.display = "inherit"
+        errorName.textContent = "This field should not be empty"
+    } else if (nomeLogin.value.length <= 4 || nomeLogin.value.length >= 12) {
         errorName.style.display = "inherit"
         nomeLogin.className = "invalid"
     } else {
@@ -34,7 +37,10 @@ nomeLogin.addEventListener("input", (e) => {
 
 emailLogin.addEventListener('input', () => {
     const errorEmail = document.querySelector(".errorEmail")
-    if (!filter.test(emailLogin.value)) {
+    if (emailLogin.value === null || emailLogin.value === "") {
+        errorEmail.style.display = "inherit"
+        errorEmail.textContent = "This field should not be empty"
+    } else if (!filter.test(emailLogin.value)) {
         emailLogin.className = "invalid"
         errorEmail.style.display = "flex"
     } else {
@@ -45,7 +51,10 @@ emailLogin.addEventListener('input', () => {
 
 passwordLogin.addEventListener('input', () => {
     const errorPassword = document.querySelector(".errorPassword")
-    if (passwordLogin.value.length < 6 || passwordLogin.value.includes("@")) {
+    if (passwordLogin.value === null || passwordLogin.value === "") {
+        errorPassword.style.display = "inherit"
+        errorPassword.textContent = "This field should not be empty"
+    } else if (passwordLogin.value.length < 6) {
         errorPassword.style.display = "flex"
         passwordLogin.className = "invalid"
     } else {
@@ -57,7 +66,10 @@ passwordLogin.addEventListener('input', () => {
 
 emailConnecting.addEventListener('input', () => {
     const ConnectingError = document.querySelector(".connectingError")
-    if (!filter.test(emailConnecting.value)) {
+    if (emailConnecting.value === null || emailConnecting.value === "") {
+        ConnectingError.style.display = "inherit"
+        ConnectingError.textContent = "This field should not be empty"
+    } else if (!filter.test(emailConnecting.value)) {
         ConnectingError.style.display = "flex"
         emailConnecting.className = "invalid"
     } else {
@@ -68,7 +80,10 @@ emailConnecting.addEventListener('input', () => {
 
 passwordConnecting.addEventListener('input', () => {
     const ConnectingErrorPassword = document.querySelector(".connectingErrorPassword")
-    if (passwordConnecting.value.length < 6 || passwordConnecting.value.includes("@")) {
+    if (passwordConnecting.value === null || passwordConnecting.value === "") {
+        ConnectingErrorPassword.style.display = "inherit"
+        ConnectingErrorPassword.textContent = "This field should not be empty"
+    } else if (passwordConnecting.value.length < 6) {
         ConnectingErrorPassword.style.display = "flex"
         passwordConnecting.className = "invalid"
     } else {
@@ -79,7 +94,6 @@ passwordConnecting.addEventListener('input', () => {
 })
 
 let userArray = []
-
 form.addEventListener('submit', (e) => {
     const addUser = () => {
         let user = {
@@ -89,7 +103,8 @@ form.addEventListener('submit', (e) => {
             password: passwordLogin.value,
         }
         userArray.push(user)
-        // document.forms[0].reset()
+        document.forms[0].reset()
+        disabled()
         console.log('contacte', {userArray})
     }
     addUser()
@@ -97,13 +112,22 @@ form.addEventListener('submit', (e) => {
 
 btnIn.addEventListener("click", () => {
     userArray.filter((user) => {
-        if (user.password === passwordConnecting.value || user.email === emailConnecting.value) {
+        if (passwordConnecting.value === user.password && emailConnecting.value === user.email) {
             alert("this account is connected")
-        } else if (passwordConnecting.value !== user.password || emailConnecting.value !== user.email) {
-            alert("this account is not registered")
+            disabled()
         } else {
             alert("this account is not registered")
         }
     })
 })
 
+const disabled = () => {
+    nomeLogin.className = "none"
+    emailLogin.className = "none"
+    passwordLogin.className = "none"
+    signUp.disabled = true;
+
+    btnIn.disabled = true;
+    emailConnecting.className = "none"
+    passwordConnecting.className = "none"
+}
