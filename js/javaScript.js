@@ -60,6 +60,7 @@ passwordLogin.addEventListener('input', () => {
     } else {
         passwordLogin.className = "valid"
         errorPassword.textContent = ""
+        signUp.style.filter = "contrast(100%)"
         signUp.disabled = false;
     }
 })
@@ -90,6 +91,7 @@ passwordConnecting.addEventListener('input', () => {
         passwordConnecting.className = "valid"
         ConnectingErrorPassword.textContent = "";
     }
+    btnIn.style.filter = "contrast(100%)"
     btnIn.disabled = false;
 })
 
@@ -119,14 +121,17 @@ btnIn.addEventListener("click", () => {
             alert("this account is not registered")
         }
     })
+    console.log(userArray)
 })
 
 const disabled = () => {
     nomeLogin.className = "none"
     emailLogin.className = "none"
     passwordLogin.className = "none"
+    signUp.style.filter = "contrast(20%)"
     signUp.disabled = true;
 
+    btnIn.style.filter = "contrast(10%)"
     btnIn.disabled = true;
     emailConnecting.className = "none"
     passwordConnecting.className = "none"
