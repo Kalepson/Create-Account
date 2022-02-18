@@ -121,7 +121,6 @@ btnIn.addEventListener("click", () => {
             alert("this account is not registered")
         }
     })
-    console.log(userArray)
 })
 
 const disabled = () => {
