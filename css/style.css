@@ -209,12 +209,7 @@ input {
 }
 
 .invalide {
-    display:none;
+    /*display:none;*/
     color: red;
     font-size: 13px;
-}
-.sign-Up{
-    filter :contrast(20%);
-}.sign-In{
-    filter :contrast(20%);
 }
