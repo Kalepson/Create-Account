@@ -18,7 +18,7 @@ const active = () => {
 }
 active()
 
-
+const errorName = document.querySelector(".errorName")
 nomeLogin.addEventListener("input", (e) => {
     const errorName = document.querySelector(".errorName")
     if (nomeLogin.value === "") {
@@ -86,6 +86,7 @@ passwordConnecting.addEventListener('input', () => {
     }
 })
 
+
 let userArray = []
 form.addEventListener('submit', (e) => {
     const addUser = () => {
@@ -95,11 +96,18 @@ form.addEventListener('submit', (e) => {
             email: emailLogin.value,
             password: passwordLogin.value,
         }
-        userArray.push(user)
-        document.forms[0].reset()
-        nomeLogin.classList.remove("valid")
-        emailLogin.classList.remove("valid")
-        passwordLogin.classList.remove("valid")
+        if (emailLogin.value === '' || nomeLogin.value === '' || passwordLogin.value === '') {
+            alert("The fields must not be empty")
+        } else if (nomeLogin.value.length < 4 || nomeLogin.value.length > 12 || !validEmail.test(emailLogin.value) || passwordLogin.value.length < 6) {
+            alert("Fields must be completed correctly")
+        } else {
+            userArray.push(user)
+            document.forms[0].reset()
+            nomeLogin.classList.remove("valid")
+            emailLogin.classList.remove("valid")
+            passwordLogin.classList.remove("valid")
+            alert("you have successfully registered")
+        }
         console.log('contacte', {userArray})
     }
     addUser()
