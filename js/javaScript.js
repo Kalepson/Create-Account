@@ -66,7 +66,7 @@ passwordLogin.addEventListener('input', () => {
 
 const btnUpDisabled = () => {
     btnUp.classList.toggle("disabled")
-  formRegistration.addEventListener("input", () => {
+    formRegistration.addEventListener("input", () => {
         if (nomeLogin.value === "") {
             btnUp.setAttribute("disabled", "disabled")
         } else if (nomeLogin.value.length < 4 || nomeLogin.value.length > 12) {
@@ -117,8 +117,32 @@ passwordConnecting.addEventListener('input', () => {
 })
 
 
-let userArray = []
+// let userArray = []
+
+
+let userArray = [
+    {
+        id: 1,
+        nome: "ion",
+        email: "ion1234@gmail.com",
+        password: "ion1234567",
+    },
+    {
+        id: 2,
+        nome: "Folipus",
+        email: "folip@gmail.com",
+        password: "filipus1234567",
+    },
+    {
+        id: 3,
+        nome: "Popovici",
+        email: "popovici@gmail.com",
+        password: "popovici12",
+    },
+]
+
 formRegistration.addEventListener('submit', (e) => {
+
     const addUser = () => {
         let user = {
             id: Date.now(),
@@ -126,6 +150,7 @@ formRegistration.addEventListener('submit', (e) => {
             email: emailLogin.value,
             password: passwordLogin.value,
         }
+
         if (emailLogin.value === '' || nomeLogin.value === '' || passwordLogin.value === '') {
             alert("The fields must not be empty")
         } else if (nomeLogin.value.length < 4 || nomeLogin.value.length > 12 || !validEmail.test(emailLogin.value) || passwordLogin.value.length < 6) {
@@ -159,17 +184,32 @@ formConnecting.addEventListener("input", () => {
 })
 
 
+
 formConnecting.addEventListener("submit", () => {
-    userArray.filter((user) => {
-        if (passwordConnecting.value === user.password && emailConnecting.value === user.email) {
-            alert("this account is connected")
-            btnIn.setAttribute("disabled", "disabled")
-            btnIn.classList.toggle("disabled")
-        } else if (passwordConnecting.value === '' || emailConnecting.value === '') {
-            alert("This field should not be empty")
-        } else {
-            alert("this account is not registered")
-        }
-    })
+userArray.forEach(item =>{
+    if (passwordConnecting.value.includes(item.password) && emailConnecting.value.includes(item.email)){
+        alert(`this account is connected ${item.nome}`)
+        console.log(`this account is connected ${item.nome}`)
+    } else if (passwordConnecting.value === '' || emailConnecting.value === '') {
+        alert("This field should not be empty")
+    } else {
+        alert("this account is not registered")
+    }
 })
+})
+
+//
+// formConnecting.addEventListener("submit", () => {
+//     userArray.map((user) => {
+//         if (passwordConnecting.value === user.password && emailConnecting.value === user.email) {
+//             alert(`this account is connected`)
+//             btnIn.setAttribute("disabled", "disabled")
+//             btnIn.classList.toggle("disabled")
+//         } else if (passwordConnecting.value === '' || emailConnecting.value === '') {
+//             alert("This field should not be empty")
+//         } else {
+//             alert("this account is not registered")
+//         }
+//     })
+// })
 
