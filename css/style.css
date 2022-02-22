@@ -209,7 +209,11 @@ input {
 }
 
 .invalide {
-    /*display:none;*/
     color: red;
     font-size: 13px;
 }
+.disabled {
+    background-color: #969494;
+}
+
+
