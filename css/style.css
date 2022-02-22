@@ -32,7 +32,7 @@ body {
     text-align: center;
     font-size: 35px;
     margin: 0;
-    font-family: "Arial Black",sans-serif;
+    font-family: "Arial Black", sans-serif;
 }
 
 p {
@@ -200,11 +200,11 @@ input {
 
 /*style input form*/
 
-.valid  {
+.valid {
     outline: 2px solid darkgreen;
 }
 
-.invalid  {
+.invalid {
     outline: 2px solid red;
 }
 
@@ -212,8 +212,28 @@ input {
     color: red;
     font-size: 13px;
 }
+
 .disabled {
+    background-color: #969494;
+    border: none;
+}
+
+/*pop style*/
+
+.pop {
+    display: none;
+    height: 480px;
+    width: 200px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: #FFFFFF;
     background-color: #969494;
 }
 
-
+.close {
+    margin-left: 180px;
+    margin-top: 10px;
+    color: red;
+    cursor: pointer;
+}
