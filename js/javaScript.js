@@ -1,44 +1,32 @@
 const buttons = document.querySelectorAll('.btn');
+const signIn = document.querySelector(".sign-In")
+const signUp = document.querySelector(".sign-Up")
 const container = document.querySelector('.container');
-const formRegistration = document.querySelector("#form")
-const formConnecting = document.querySelector(".form")
-const nameLogin = formRegistration.querySelector(".nome-login");
-const emailLogin = formRegistration.querySelector(".email-login");
-const passwordLogin = formRegistration.querySelector(".password-login");
-const emailConnecting = document.querySelector(".email-connecting");
-const passwordConnecting = document.querySelector(".password-connecting");
-const btnIn = document.querySelector(".sign-In")
-const btnUp = document.querySelector(".sign-Up")
-const overlay = document.querySelector(".pop")
-const infoPop = document.querySelector(".infoPop")
-const close = document.querySelector(".close")
-const errorName = document.querySelector(".errorName")
-const errorEmail = document.querySelector(".errorEmail")
-const errorPassword = document.querySelector(".errorPassword")
-const error_Email = document.querySelector(".error-Email")
-const error_Password = document.querySelector(".error-Password")
-const field = document.querySelectorAll(".connect")
-const logConnect = document.querySelectorAll(".logConnect")
+const formCreateAccount = document.querySelector("#form")
+const formSignIn = document.querySelector(".form")
+const nameCreateAccount = formCreateAccount.querySelector(".nome-login");
+const emailCreateAccount = formCreateAccount.querySelector(".email-login");
+const passwordCreateAccount = formCreateAccount.querySelector(".password-login");
+const errorNameCreateAccount = document.querySelector(".errorName")
+const errorEmailCreateAccount = document.querySelector(".errorEmail")
+const errorPasswordCreateAccount = document.querySelector(".errorPassword")
+const emailSignIn = document.querySelector(".email-connecting");
+const passwordSignIn = document.querySelector(".password-connecting");
+const errorEmailSignIn = document.querySelector(".error-Email")
+const errorPasswordSignIn = document.querySelector(".error-Password")
+const inputCreateAccount = document.querySelectorAll(".inputCreateAccount")
+const inputSignIn = document.querySelectorAll(".inputSignIn")
 
+let users = [];
+const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-let userArray = [];
-const validEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+buttons.forEach((btn) => btn.addEventListener('click', () => container.classList.add('active')))
 
-close.addEventListener("click", () => overlay.style.display = "none")
-
-const active = () => {
-    buttons.forEach((btn) => {
-        btn.addEventListener('click', () => container.classList.toggle('active'))
-    })
-}
-active()
-
-
-const showNameError = (nameValue, errorMessage) => {
+const showNameError = (nameValue, errorMessage, minLength, maxLength ) => {
     if (nameValue.value === "") {
         errorMessage.textContent = "This field should not be empty"
-    } else if (nameValue.value.length < 4 || nameValue.value.length > 12) {
-        errorMessage.textContent = "Minimum 4 characters max 12"
+    } else if (nameValue.value.length < minLength || nameValue.value.length > maxLength) {
+        errorMessage.textContent = `Minimum ${minLength} characters max ${maxLength}`
         nameValue.className = "invalid"
     } else {
         nameValue.className = "valid"
@@ -46,12 +34,10 @@ const showNameError = (nameValue, errorMessage) => {
     }
 }
 
-nameLogin.addEventListener("input", () => showNameError(nameLogin, errorName))
-
 const showEmailError = (emailValue, errorMessage) => {
     if (emailValue.value === "") {
         errorMessage.textContent = "This field should not be empty"
-    } else if (!validEmail.test(emailValue.value)) {
+    } else if (!regexEmail.test(emailValue.value)) {
         errorMessage.textContent = "Please provide a valid email address"
         emailValue.className = "invalid"
     } else {
@@ -60,14 +46,11 @@ const showEmailError = (emailValue, errorMessage) => {
     }
 }
 
-
-emailLogin.addEventListener('input', () => showEmailError(emailLogin, errorEmail))
-
-const showPasswordError = (passwordValue, errorMessage) => {
-    if (passwordValue.value === null || passwordValue.value === "") {
+const showPasswordError = (passwordValue, errorMessage, minLength, maxLength) => {
+    if (passwordValue.value === "") {
         errorMessage.textContent = "This field should not be empty"
-    } else if (passwordValue.value.length < 6) {
-        errorMessage.textContent = "Password must be at least 6 characters"
+    } else if (passwordValue.value.length < minLength || passwordValue.value.length > maxLength) {
+        errorMessage.textContent =  `Password must be minimum ${minLength} characters maximum ${maxLength}`
         passwordValue.className = "invalid"
     } else {
         passwordValue.className = "valid"
@@ -75,71 +58,77 @@ const showPasswordError = (passwordValue, errorMessage) => {
     }
 }
 
-passwordLogin.addEventListener('input', () => showPasswordError(passwordLogin, errorPassword))
-
-const btnUpDisabled = (form, fields, btn) => {
+const btnDisabled = (form, fields, btn) => {
     form.addEventListener("input", () => {
         fields.forEach(item => {
-            console.log(item.classList);
             if (item.classList.contains("valid")) {
-                btn.removeAttribute("disabled")
+                btn.disabled = false
                 btn.classList.remove("disabled")
             } else {
-                btn.setAttribute("disabled", "disabled")
+                btn.disabled = true
                 btn.classList.add("disabled")
             }
         })
     })
 }
-btnUpDisabled(formRegistration, field ,btnUp)
 
-emailConnecting.addEventListener('input', () => showEmailError(emailConnecting, error_Email))
-passwordConnecting.addEventListener('input', () => showPasswordError(passwordConnecting, error_Password))
-
-const addUser = () => {
-    const newEmail = userArray.findIndex(user => user.email === emailLogin.value);
-    let user = {
-        id: Date.now(),
-        nome: nameLogin.value,
-        email: emailLogin.value,
-        password: passwordLogin.value,
+const clearForm = (form, btn, email, password, name = null) => {
+    form.reset()
+    if (name) {
+        name.classList.remove("valid")
     }
-
-      if (newEmail !== -1) {
-        alert("Email exista")
-    } else {
-        userArray.push(user)
-        document.forms[0].reset()
-        nameLogin.classList.remove("valid")
-        emailLogin.classList.remove("valid")
-        passwordLogin.classList.remove("valid")
-        overlay.style.display = "flex"
-        infoPop.textContent = `this account is connected`
-        btnUp.setAttribute("disabled", "disabled")
-        btnUp.classList.toggle("disabled")
-    }
-    console.log('contacte', {userArray})
+    email.classList.remove("valid")
+    password.classList.remove("valid")
+    btn.disabled = true;
+    btn.classList.add("disabled")
 }
 
-formRegistration.addEventListener('submit', () => addUser())
-formConnecting.addEventListener("input", () => btnUpDisabled(formConnecting, logConnect, btnIn))
-formConnecting.addEventListener("submit", () => {
-    if (!userArray.length ){
+
+
+const createUser = () => {
+    const newEmail = users.findIndex(user => user.email === emailCreateAccount.value);
+    let newUser = {
+        id: Date.now(),
+        nome: nameCreateAccount.value,
+        email: emailCreateAccount.value,
+        password: passwordCreateAccount.value,
+    }
+    if (newEmail !== -1) {
+        alert("Email exista")
+    } else {
+        users.push(newUser)
+        alert('CREATED!');
+        clearForm(formCreateAccount, signUp, emailCreateAccount, passwordCreateAccount, nameCreateAccount)
+    }
+}
+
+btnDisabled(formCreateAccount, inputCreateAccount, signUp);
+btnDisabled(formSignIn, inputSignIn, signIn);
+
+
+nameCreateAccount.addEventListener("input", () => showNameError(nameCreateAccount, errorNameCreateAccount , 3,12))
+emailCreateAccount.addEventListener('input', () => showEmailError(emailCreateAccount, errorEmailCreateAccount))
+passwordCreateAccount.addEventListener('input', () => showPasswordError(passwordCreateAccount, errorPasswordCreateAccount,5,18))
+emailSignIn.addEventListener('input', () => showEmailError(emailSignIn, errorEmailSignIn))
+passwordSignIn.addEventListener('input', () => showPasswordError(passwordSignIn, errorPasswordSignIn,5,18))
+formCreateAccount.addEventListener('submit', () => createUser())
+formSignIn.addEventListener("input", () => btnDisabled(formSignIn, inputSignIn, signIn))
+
+
+
+
+formSignIn.addEventListener("submit", () => {
+    if (!users.length) {
         alert("this account is not registered")
         return
     }
-    userArray.forEach(item => {
-        if (passwordConnecting.value.includes(item.password) && emailConnecting.value.includes(item.email)) {
-            overlay.style.display = "flex"
-            infoPop.textContent = `this account is connected ${item.nome}`
-            console.log(`this account is connected ${item.nome}`)
-        } else if (passwordConnecting.value === '' || emailConnecting.value === '') {
-            alert("This field should not be empty")
+    users.forEach(item => {
+        if (passwordSignIn.value.includes(item.password) && emailSignIn.value.includes(item.email)) {
+            alert(`this account is connected ${item.nome}`)
+            clearForm(formSignIn, signIn, emailSignIn, passwordSignIn)
         } else {
             alert("this account is not registered")
         }
     })
 })
-
-
 
