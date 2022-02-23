@@ -123,6 +123,9 @@ input {
     width: 50%;
     z-index: 2;
 }
+.sign-Up{
+    margin-top: 10px;
+}
 
 .create-account {
     width: 50%;
@@ -218,22 +221,3 @@ input {
     border: none;
 }
 
-/*pop style*/
-
-.pop {
-    display: none;
-    height: 480px;
-    width: 200px;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    color: #FFFFFF;
-    background-color: #969494;
-}
-
-.close {
-    margin-left: 180px;
-    margin-top: 10px;
-    color: red;
-    cursor: pointer;
-}
