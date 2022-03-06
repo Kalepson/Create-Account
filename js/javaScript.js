@@ -14,15 +14,13 @@ const emailSignIn = document.querySelector(".email-connecting");
 const passwordSignIn = document.querySelector(".password-connecting");
 const errorEmailSignIn = document.querySelector(".error-Email")
 const errorPasswordSignIn = document.querySelector(".error-Password")
-const inputCreateAccount = document.querySelectorAll(".createAccountInput")
-const inputSignIn =  document.querySelectorAll(".signInInput")
 
-let users = [];
 const regexEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+let users = [];
 
 buttons.forEach((btn) => btn.addEventListener('click', () => container.classList.toggle('active')))
 
-const showNameError = (nameValue, errorMessage, minLength, maxLength ) => {
+const showNameError = (nameValue, errorMessage, minLength, maxLength) => {
     if (nameValue.value === "") {
         errorMessage.textContent = "This field should not be empty"
     } else if (nameValue.value.length < minLength || nameValue.value.length > maxLength) {
@@ -50,7 +48,7 @@ const showPasswordError = (passwordValue, errorMessage, minLength, maxLength) =>
     if (passwordValue.value === null || passwordValue.value === "") {
         errorMessage.textContent = "This field should not be empty"
     } else if (passwordValue.value.length < minLength || passwordValue.value.length > maxLength) {
-        errorMessage.textContent =  `Password must be minimum ${minLength} characters maximum ${maxLength}`
+        errorMessage.textContent = `Password must be minimum ${minLength} characters maximum ${maxLength}`
         passwordValue.className = "invalid"
     } else {
         passwordValue.className = "valid"
@@ -58,17 +56,28 @@ const showPasswordError = (passwordValue, errorMessage, minLength, maxLength) =>
     }
 }
 
-const btnDisabled = (form, fields, btn) => {
-    form.addEventListener("input", () => {
-        fields.forEach(item => {
-            if (item.classList.contains("valid")) {
-                btn.removeAttribute("disabled")
-                btn.classList.remove("disabled")
+const btnDisabledSignUp = () => {
+    formCreateAccount.addEventListener("input", () => {
+            if (emailCreateAccount.className === "valid" && passwordCreateAccount.className === "valid" && nameCreateAccount.className === "valid") {
+                signUp.disabled = false
+                signUp.classList.remove("disabled")
             } else {
-                btn.disabled = true
-                btn.classList.add("disabled")
+                signUp.disabled = true
+                signUp.classList.add("disabled")
             }
-        })
+
+    })
+}
+
+const btnDisabledSignIn = () => {
+    formSignIn.addEventListener("input", () => {
+            if (emailSignIn.className === "valid" && passwordSignIn.className === "valid") {
+                signIn.disabled = false
+                signIn.classList.remove("disabled")
+            } else {
+                signIn.disabled = true
+                signIn.classList.add("disabled")
+            }
     })
 }
 
@@ -100,15 +109,14 @@ const createUser = () => {
     }
 }
 
-btnDisabled(formCreateAccount, inputCreateAccount, signUp);
-btnDisabled(formSignIn, inputSignIn, signIn);
-
-nameCreateAccount.addEventListener("input", () => showNameError(nameCreateAccount, errorNameCreateAccount , 3,12))
+nameCreateAccount.addEventListener("input", () => showNameError(nameCreateAccount, errorNameCreateAccount, 3, 12))
 emailCreateAccount.addEventListener('input', () => showEmailError(emailCreateAccount, errorEmailCreateAccount))
-passwordCreateAccount.addEventListener('input', () => showPasswordError(passwordCreateAccount, errorPasswordCreateAccount,8,14))
-emailSignIn.addEventListener('input', () => showEmailError(emailSignIn, errorEmailSignIn))
-passwordSignIn.addEventListener('input', () => showPasswordError(passwordSignIn, errorPasswordSignIn,8,14))
+passwordCreateAccount.addEventListener('input', () => showPasswordError(passwordCreateAccount, errorPasswordCreateAccount, 8, 14))
 formCreateAccount.addEventListener('submit', () => createUser())
+emailSignIn.addEventListener('input', () => showEmailError(emailSignIn, errorEmailSignIn))
+passwordSignIn.addEventListener('input', () => showPasswordError(passwordSignIn, errorPasswordSignIn, 8, 14))
+btnDisabledSignUp()
+btnDisabledSignIn();
 
 formSignIn.addEventListener("submit", () => {
     if (!users.length) {
@@ -116,11 +124,12 @@ formSignIn.addEventListener("submit", () => {
     }
     users.forEach(item => {
         if (passwordSignIn.value.includes(item.password) && emailSignIn.value.includes(item.email)) {
-            alert(`this account is connected ${item.nome}`)
+            alert(`this account is connected Name : ${item.nome}`)
             clearForm(formSignIn, signIn, emailSignIn, passwordSignIn)
         } else {
             alert("this account is not registered")
         }
     })
 })
+
 
